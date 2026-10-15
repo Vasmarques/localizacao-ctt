@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enviar Localização</title>
+</head>
+<body>
+
+<h2>Partilhar localização</h2>
+
+<button onclick="enviarLocalizacao()">Enviar</button>
+
+<script>
+function enviarLocalizacao() {
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
+
+        fetch("URL_DO_POWER_AUTOMATE", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                data: new Date().toISOString()
+            })
+        });
+
+        alert("Localização enviada com sucesso");
+
+    }, function() {
+        alert("Não foi possível obter a localização");
+    });
+
+}
+</script>
+
+</body>
+</html>
