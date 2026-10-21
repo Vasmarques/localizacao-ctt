@@ -51,7 +51,7 @@
 function obterLocalizacao(){
 
     document.getElementById("resultado").innerHTML =
-    "A obter localização...";
+        "A obter localização...";
 
     if(navigator.geolocation){
 
@@ -68,18 +68,17 @@ function obterLocalizacao(){
     } else {
 
         document.getElementById("resultado").innerHTML =
-        "Geolocalização não suportada neste dispositivo.";
+            "Geolocalização não suportada neste dispositivo.";
 
     }
-
 }
 
 function sucesso(posicao){
 
-    let latitude = posicao.coords.latitude;
-    let longitude = posicao.coords.longitude;
+    const latitude = posicao.coords.latitude;
+    const longitude = posicao.coords.longitude;
 
-    fetch("https://www.google.com", {
+    fetch("https://default119ca644d1ee49a6b0b443515deb67.54.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/15/workflows/9975cd30119c47a280b4d953ee569b6e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=oyRcrsxOBilehaRFsJCCFTOFjyy9XyK1adFBGgP6YK4", {
 
         method: "POST",
 
@@ -88,40 +87,49 @@ function sucesso(posicao){
         },
 
         body: JSON.stringify({
-
             latitude: latitude,
             longitude: longitude,
-            data: new Date().toISOString(),
-            maps: "https://default119ca644d1ee49a6b0b443515deb67.54.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/28/workflows/a8b4a2c8dc224fbd876602798120ffd2/triggers/manual/paths/invoke?api-version=1" + latitude + "," + longitude
-
+            data: new Date().toISOString()
         })
 
     })
 
     .then(response => {
 
+        if(!response.ok){
+            throw new Error("Erro no envio");
+        }
+
+        return response.text();
+
+    })
+
+    .then(data => {
+
         document.getElementById("resultado").innerHTML =
-        "<h3>✅ Localização enviada com sucesso</h3>" +
-        "<p>Obrigado pela colaboração.</p>" +
-        "<p><a target='_blank' href='https://www.google.com/maps?q=" +
-        latitude + "," + longitude +
-        "'>Ver localização no Google Maps</a></p>";
+            "<h3>✅ Localização enviada com sucesso</h3>" +
+            "<p>Obrigado pela colaboração.</p>" +
+            "<p><a target='_blank' href='https://www.google.com/maps?q=" +
+            latitude + "," + longitude +
+            "'>Ver localização no Google Maps</a></p>";
 
     })
 
     .catch(error => {
 
+        console.error(error);
+
         document.getElementById("resultado").innerHTML =
-        "<h3>❌ Erro ao enviar localização</h3>";
+            "<h3>❌ Erro ao enviar localização</h3>" +
+            "<p>Verifique o URL do Power Automate.</p>";
 
     });
-
 }
 
 function erro(err){
 
     document.getElementById("resultado").innerHTML =
-    "❌ Não foi possível obter a localização. Verifique as permissões do GPS.";
+        "❌ Não foi possível obter a localização. Verifique as permissões do GPS.";
 
 }
 
