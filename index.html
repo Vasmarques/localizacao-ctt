@@ -78,8 +78,7 @@ function sucesso(posicao){
     const latitude = posicao.coords.latitude;
     const longitude = posicao.coords.longitude;
 
-    fetch("fetch("https://default119ca644d1ee49a6b0b443515deb67.54.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/15/workflows/9975cd30119c47a280b4d953ee569b6e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=oyRcrsxOBilehaRFsJCCFTOFjyy9XyK1adFBGgP6YK4", {
-", {
+    fetch("https://default119ca644d1ee49a6b0b443515deb67.54.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/15/workflows/9975cd30119c47a280b4d953ee569b6e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=oyRcrsxOBilehaRFsJCCFTOFjyy9XyK1adFBGgP6YK4", {
 
         method: "POST",
 
@@ -97,7 +96,7 @@ function sucesso(posicao){
 
     .then(response => {
 
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error("Erro no envio");
         }
 
@@ -122,9 +121,10 @@ function sucesso(posicao){
 
         document.getElementById("resultado").innerHTML =
             "<h3>❌ Erro ao enviar localização</h3>" +
-            "<p>Verifique o URL do Power Automate.</p>";
+            "<p>" + error.message + "</p>";
 
     });
+
 }
 
 function erro(err){
@@ -133,8 +133,6 @@ function erro(err){
         "Erro GPS: " + err.code + " - " + err.message;
 
     console.log(err);
-
-}
 
 }
 
