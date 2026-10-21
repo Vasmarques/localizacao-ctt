@@ -129,7 +129,11 @@ function sucesso(posicao){
 function erro(err){
 
     document.getElementById("resultado").innerHTML =
-        "❌ Não foi possível obter a localização. Verifique as permissões do GPS.";
+        "Erro GPS: " + err.code + " - " + err.message;
+
+    console.log(err);
+
+}
 
 }
 
